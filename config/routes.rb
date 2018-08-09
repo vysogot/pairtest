@@ -15,4 +15,10 @@ Rails.application.routes.draw do
       get :export
     end
   end
+
+  namespace :movies_api, defaults: { format: :json } do
+      namespace :v1 do
+          resources :movies, only: [:index]
+      end
+  end
 end
