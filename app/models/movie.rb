@@ -14,4 +14,9 @@
 
 class Movie < ApplicationRecord
   belongs_to :genre
+  delegate :plot, :rating, :poster, to: :remote_movie
+
+  def remote_movie
+      @delegator ||= RemoteMovie.new(title)
+  end
 end
