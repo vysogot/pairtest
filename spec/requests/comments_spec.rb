@@ -22,7 +22,7 @@ describe "Movie comments requests", type: :request do
     comment = create(:comment, user: @user, movie: @movie)
 
     login_as(@user)
-    delete "/movies/#{@movie.id}/comments/#{comment.id}"
+    delete "/comments/#{comment.id}"
 
     assert @movie.comments.empty?
   end
@@ -34,6 +34,27 @@ describe "Movie comments requests", type: :request do
     visit "/movies/#{@movie.id}"
 
     expect(page).to have_selector(".comment", count: 5)
+  end
+
+  it "displays comment form for a logged in user without a comment" do
+    sign_in(@user)
+    visit "/movies/#{@movie.id}"
+
+    expect(page).to have_selector("form#new_comment", count: 1)
+  end
+
+  it "creates a comment on submiting the form" do
+    sign_in(@user)
+    visit "/movies/#{@movie.id}"
+    comment_body = 'This is exactly what I think about this movie'
+
+    within(:css, "form#new_comment") do
+      fill_in('Your comment', with: comment_body)
+      click_button('Send')
+    end
+
+    expect(@movie.comments.last.body).to eq(comment_body)
+    expect(@movie.comments.last.user).to eq(@user)
   end
 
 end

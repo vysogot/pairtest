@@ -1,9 +1,21 @@
 %h1= @movie.title
 .jumbotron
   = @movie.description
+= form_for([@movie, @new_comment]) do |f|
+  .form-group
+    = f.label :body, 'Your comment'
+    %br/
+    = f.text_area :body, autofocus: true
+    .actions
+      = f.submit 'Send', class: 'btn btn-default'
+%h3 Comments
 - @comments.each do |comment|
   .comment
-    %p=comment.user.name
-    %p=comment.body
+    %p
+      %span.field By:
+      =comment.user.name
+    %p
+      %span.field Saying:
+      =comment.body
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
