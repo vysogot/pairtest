@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Comments requests", type: :request do
+describe "Movie comments requests", type: :request do
 
   before do
     @user = create(:user)
@@ -26,4 +26,14 @@ describe "Comments requests", type: :request do
 
     assert @movie.comments.empty?
   end
+
+  it "displays comments belonging to a movie" do
+    create_list(:comment, 5, movie: @movie)
+    create_list(:comment, 5)
+
+    visit "/movies/#{@movie.id}"
+
+    expect(page).to have_selector(".comment", count: 5)
+  end
+
 end
