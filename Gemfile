@@ -34,6 +34,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop"
   gem "simplecov"
+  gem "byebug"
 end
 
 group :test do
