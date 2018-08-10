@@ -9,6 +9,14 @@ class CommentsController < ActionController::Base
     redirect_to movie, notice: "Thanks for sharing!"
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    movie = comment.movie
+
+    comment.destroy
+    redirect_to movie, notice: "You can always write another one!"
+  end
+
   private
 
   def comment_params
