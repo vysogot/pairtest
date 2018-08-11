@@ -17,6 +17,9 @@ class CommentsController < ActionController::Base
     redirect_to movie, notice: "You can always write another one!"
   end
 
+  def ranking
+  end
+
   private
 
   def comment_params

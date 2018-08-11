@@ -96,3 +96,11 @@ describe "Movie comments requests", type: :request do
   end
 
 end
+
+describe "Comments ranking" do
+  it "shows the ranking page" do
+    visit '/comments/ranking'
+    expect(page).to have_css('h1', count: 1, text: 'Top Commentators')
+  end
+
+end
