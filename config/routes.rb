@@ -13,11 +13,15 @@ Rails.application.routes.draw do
     member do
       get :send_info
     end
+
     collection do
       get :export
     end
+
     resources :comments, only: [:create, :destroy], shallow: true
   end
+
+  resources :comments_ranking, only: [:index]
 
   namespace :movies_api, defaults: { format: :json } do
       namespace :v1 do
