@@ -85,4 +85,14 @@ describe "Movie comments requests", type: :request do
     expect(page).to have_link('Log in to comment')
   end
 
+  it "shows comment form only when user didn't comment the movie" do
+    comment = create(:comment, user: @user, movie: @movie)
+
+    sign_in(@user)
+    visit "/movies/#{@movie.id}"
+
+    expect(page).not_to have_selector("form#new_comment", count: 1)
+    expect(page).to have_text('You can have one comment per movie. Delete your comment to add the new one.')
+  end
+
 end

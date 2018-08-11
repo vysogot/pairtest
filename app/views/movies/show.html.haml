@@ -2,13 +2,16 @@
 .jumbotron
   = @movie.description
 - if user_signed_in?
-  = form_for([@movie, @new_comment]) do |f|
-    .form-group
-      = f.label :body, 'Your comment'
-      %br/
-      = f.text_area :body, autofocus: true
-      .actions
-        = f.submit 'Send', class: 'btn btn-default'
+  - if @movie.has_no_comment_by?(current_user)
+    = form_for([@movie, @new_comment]) do |f|
+      .form-group
+        = f.label :body, 'Your comment'
+        %br/
+        = f.text_area :body, autofocus: true
+        .actions
+          = f.submit 'Send', class: 'btn btn-default'
+  - else
+    %p You can have one comment per movie. Delete your comment to add the new one.
 - else
   .actions
     = link_to 'Log in to comment', new_user_session_path

@@ -15,4 +15,8 @@
 class Movie < ApplicationRecord
   belongs_to :genre
   has_many :comments
+
+  def has_no_comment_by?(user)
+    comments.where(user: user).empty?
+  end
 end
