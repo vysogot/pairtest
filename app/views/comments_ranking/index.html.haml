@@ -1,9 +1,15 @@
-%h1 Top Commentators
-%table.table.table-striped.ranking
-  %tbody
-    - @top10.each_with_index do |user, i|
-      %tr{ id: i + 1 }
-        %td= i + 1
-        %td
-          %h4
-            = "#{user.name}: #{user.comments_count}"
+.row
+  .col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+    %h1.text-center Top 10 commentators
+    %table.table.table-striped
+      %thead
+        %tr
+          %th #
+          %th Name
+          %th Number of comments
+      %tbody
+        - @top10.each_with_index do |user, i|
+          %tr{ id: i + 1 }
+            %td= i + 1
+            %td.name= user.name
+            %td.score= user.comments_count
