@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     collection do
       get :export
     end
+    resources :comments, only: [:create, :destroy], shallow: true
   end
 
   namespace :movies_api, defaults: { format: :json } do

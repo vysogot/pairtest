@@ -1,6 +1,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.comment {
+  background: #eee;
+  border: 1px solid #ddd;
+  padding: 25px;
+  margin: 25px 0;
+  .field { font-weight: bold; }
+}
+
 .remote-movies .poster {
     width: 150px;
     height: 250px;
