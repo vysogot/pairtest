@@ -14,6 +14,10 @@
 
 class Movie < ApplicationRecord
   belongs_to :genre
-
   validates_with TitleBracketsValidator
+  delegate :plot, :rating, :poster, to: :remote_movie
+
+  def remote_movie
+      @delegator ||= RemoteMovie.new(title)
+  end
 end
