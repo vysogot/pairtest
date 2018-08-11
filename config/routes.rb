@@ -21,7 +21,5 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy], shallow: true
   end
 
-  resources :comments, only: [] do
-    get :ranking, on: :collection
-  end
+  resources :comments_ranking, only: [:index]
 end
