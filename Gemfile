@@ -11,6 +11,7 @@ gem "jquery-rails"
 gem "sass-rails"
 gem "sqlite3"
 gem "uglifier"
+gem "rest-client"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
@@ -35,6 +36,7 @@ group :development, :test do
   gem "rubocop"
   gem "simplecov"
   gem "byebug"
+  gem "webmock"
 end
 
 group :test do

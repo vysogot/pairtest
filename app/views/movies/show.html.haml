@@ -1,6 +1,12 @@
 %h1= @movie.title
-.jumbotron
-  = @movie.description
+.jumbotron.remote-movie{ 'data-title': @movie.title }
+  %h3= 'Description'
+  %p= @movie.description
+  %p.placeholder.plot{ 'data-loading': 'The plot is coming...', 'data-prefix': 'Plot: ', 'data-key': 'plot' }
+  %p.placeholder.rating{ 'data-loading': 'Loading rating...', 'data-prefix': 'Rating: ', 'data-key': 'rating'}
+  %p.placeholder.poster
+- if user_signed_in?
+  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
 - if user_signed_in?
   - if @movie.has_no_comment_by?(current_user)
     = form_for([@movie, @new_comment]) do |f|
@@ -26,5 +32,3 @@
       =comment.body
     - if comment.user == current_user
       %p= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }
-- if user_signed_in?
-  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
