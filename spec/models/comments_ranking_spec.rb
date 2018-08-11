@@ -16,4 +16,16 @@ RSpec.describe CommentsRanking, type: :model do
     assert top_user == ranking.first
     assert last_rankable_user == ranking.last
   end
+
+  it "make sure ranking query is cached" do
+    CommentsRanking.top10
+    expect(User).not_to receive(:select)
+    CommentsRanking.top10
+  end
+
+  it "make sure ranking expires on new comment" do
+    create(:comment)
+    expect(User).to receive(:select).and_call_original
+    CommentsRanking.top10
+  end
 end
