@@ -2,7 +2,9 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, only: [:send_info]
 
   def index
-    @movies = Movie.all.decorate
+    @movies = Movie
+      .select(:id, :title, :description, :released_at, :genre_id, 'genres.name AS genre_name')
+      .joins(:genre)
   end
 
   def show
