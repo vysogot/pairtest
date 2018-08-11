@@ -12,6 +12,6 @@
         - @genres.each_with_index do |genre, i|
           %tr
             %td= i + 1
-            %td= genre.name
+            %td= link_to genre.name, movies_genre_path(genre.id)
             %td= genre.number_of_movies
             %td= genre.created_at

@@ -16,7 +16,14 @@ class Movie < ApplicationRecord
   belongs_to :genre
   has_many :comments
 
+  validates_with TitleBracketsValidator
+  delegate :plot, :rating, :poster, to: :remote_movie
+
   def has_no_comment_by?(user)
     comments.where(user: user).empty?
+  end
+
+  def remote_movie
+      @delegator ||= RemoteMovie.new(title)
   end
 end
