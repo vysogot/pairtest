@@ -52,8 +52,6 @@ GEM
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
-    assert_difference (1.0.0)
-      activesupport (>= 3.0.0)
     ast (2.4.0)
     autoprefixer-rails (8.2.0)
       execjs
@@ -279,7 +277,7 @@ GEM
       activesupport (>= 4.2)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
-    sprockets (3.7.1)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)
@@ -317,7 +315,6 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  assert_difference
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
