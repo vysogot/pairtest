@@ -1,2 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.remote-movies .poster {
+    width: 150px;
+    height: 250px;
+    background: asset-url('loading.gif') center center no-repeat;
+    img { width: 100%; }
+}
