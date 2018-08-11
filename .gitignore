@@ -22,3 +22,6 @@ coverage
 
 # Ignore VIM files
 *.swp
+
+# Ignore byebug
+.byebug_history
