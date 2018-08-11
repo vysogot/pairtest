@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe CommentsRanking, type: :model do
-  it "makes a ranking of top 10 commentators" do
+  it "makes a ranking of top 10 commentators from last 7 days" do
     create_list(:user, 15).each_with_index do |user, i|
       create_list(:comment, i, user: user)
     end
 
     top_user = User.last
     last_rankable_user = User.find(6)
+
+    create_list(:comment, 2, user: last_rankable_user, created_at: 8.days.ago)
 
     ranking = CommentsRanking.top10
 
