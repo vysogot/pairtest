@@ -57,4 +57,32 @@ describe "Movie comments requests", type: :request do
     expect(@movie.comments.last.user).to eq(@user)
   end
 
+  it "deletes a comment by clicking on a link" do
+    comment = create(:comment, user: @user, movie: @movie)
+
+    login_as(@user)
+    visit "/movies/#{@movie.id}"
+    click_link 'Delete'
+
+    assert @movie.comments.empty?
+  end
+
+  it "shows delete link only to the owner of a comment" do
+    comment = create(:comment, user: @user, movie: @movie)
+
+    login_as(create(:user))
+    visit "/movies/#{@movie.id}"
+
+    expect(page).not_to have_link('Delete')
+  end
+
+  it "shows comment form only to a logged in user" do
+    comment = create(:comment, user: @user, movie: @movie)
+
+    visit "/movies/#{@movie.id}"
+
+    expect(page).not_to have_selector("form#new_comment", count: 1)
+    expect(page).to have_link('Log in to comment')
+  end
+
 end

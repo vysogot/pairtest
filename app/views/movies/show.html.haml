@@ -1,13 +1,17 @@
 %h1= @movie.title
 .jumbotron
   = @movie.description
-= form_for([@movie, @new_comment]) do |f|
-  .form-group
-    = f.label :body, 'Your comment'
-    %br/
-    = f.text_area :body, autofocus: true
-    .actions
-      = f.submit 'Send', class: 'btn btn-default'
+- if user_signed_in?
+  = form_for([@movie, @new_comment]) do |f|
+    .form-group
+      = f.label :body, 'Your comment'
+      %br/
+      = f.text_area :body, autofocus: true
+      .actions
+        = f.submit 'Send', class: 'btn btn-default'
+- else
+  .actions
+    = link_to 'Log in to comment', new_user_session_path
 %h3 Comments
 - @comments.each do |comment|
   .comment
@@ -17,5 +21,7 @@
     %p
       %span.field Saying:
       =comment.body
+    - if comment.user == current_user
+      %p= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
