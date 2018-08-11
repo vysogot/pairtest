@@ -2,8 +2,9 @@ require "rails_helper"
 
 describe "Comments ranking", type: :request do
 
-  it "shows the ranking page" do
-    visit '/comments_ranking'
+  it "shows the ranking link and page" do
+    visit '/'
+    click_link 'Comments ranking'
     expect(page).to have_css('h1', count: 1, text: 'Top Commentators')
   end
 
