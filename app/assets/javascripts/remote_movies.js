@@ -1,24 +1,39 @@
-// Make async calls to get the movie details
-function fillMovieDetails(parentElement, title) {
+function getRemoteDetails(parentElement, title) {
 
-    // This could be changed to consume the API directly
-    // Here, it goes through the server to control the response
-    $.get('/remote_movies/' + title, function (response) {
+    var posterSrc;
+    // This could work if the API provided right CORS headers
+    // let apiUrl = 'https://pairguru-api.herokuapp.com/api/v1/movies/';
 
-        // Load the poster image
-        $('<img />', {
-            src: response.poster,
-        }).appendTo(parentElement.find('.poster'))
+    // Using proxy
+    let apiUrl = '/remote_movies/';
 
-        // Load rating and plot
+    $.get(apiUrl + title, function (response) {
+
+        posterSrc = response.poster
+
         parentElement.find('.rating, .plot').each(function () {
-
-            // All the texts come from the server for easy i18n
             $(this).empty().append(
                 '<strong>' + $(this).data('prefix') + '</strong>'
                 + response[$(this).data('key')]
             );
         });
+
+    }).fail(function () {
+
+        posterSrc = '/no-image.jpg',
+
+        parentElement.find('.rating, .plot').each(function () {
+            $(this).empty().append(
+                '<strong>' + $(this).data('prefix') + '</strong>'
+                + 'Not available'
+            );
+        });
+
+    }).always(function () {
+
+        $('<img />', {
+            src: posterSrc,
+        }).appendTo(parentElement.find('.poster'))
 
     });
 
@@ -26,24 +41,21 @@ function fillMovieDetails(parentElement, title) {
 
 $(document).ready(function () {
 
-    // Custom loading message for a placeholder
     $('.placeholder').each(function() {
         $(this).text($(this).data('loading'));
     });
 
-    // Fill details on index
     $('table.remote-movies tr').each(function () {
         let row = $(this);
         let title = row.data('title');
 
-        fillMovieDetails(row, title);
+        getRemoteDetails(row, title);
     });
 
-    // Fill details on show
     $('.remote-movie').each(function() {
         let container = $(this);
         let title = container.data('title');
 
-        fillMovieDetails(container, title);
+        getRemoteDetails(container, title);
     });
 });

@@ -11,7 +11,7 @@
           %p.placeholder.rating{ 'data-loading': 'Loading rating...', 'data-prefix': 'Rating: ', 'data-key': 'rating'}
           %p
             %strong
-              = link_to movie.genre.name, movies_genre_path(movie.genre)
+              = link_to movie.genre_name, movies_genre_path(movie.genre_id)
             = ' (' + movie.released_at.to_s + ')'
           %p= movie.description
           %p.placeholder.plot{ 'data-loading': 'The plot is coming...', 'data-prefix': 'Plot: ', 'data-key': 'plot' }
