@@ -13,8 +13,12 @@ class CommentsController < ActionController::Base
     comment = Comment.find(params[:id])
     movie = comment.movie
 
-    comment.destroy
-    redirect_to movie, notice: "You can always write another one!"
+    if comment.can_be_destroyed_by?(current_user)
+      comment.destroy
+      redirect_to movie, notice: "You can always write another one!"
+    else
+      redirect_to movie, notice: "Hey, this is not your comment!"
+    end
   end
 
   private

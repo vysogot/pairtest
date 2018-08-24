@@ -8,4 +8,8 @@ class Comment < ApplicationRecord
   def expire_ranking
     Rails.cache.delete(:comments_ranking)
   end
+
+  def can_be_destroyed_by?(user)
+    self.user == user
+  end
 end

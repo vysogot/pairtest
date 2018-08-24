@@ -55,6 +55,8 @@ describe "Movie comments requests", type: :request do
 
     expect(@movie.comments.last.body).to eq(comment_body)
     expect(@movie.comments.last.user).to eq(@user)
+
+    expect(page).to have_text('Thanks for sharing!')
   end
 
   it "deletes a comment by clicking on a link" do
@@ -65,6 +67,19 @@ describe "Movie comments requests", type: :request do
     click_link 'Delete'
 
     assert @movie.comments.empty?
+    expect(page).to have_text("You can always write another one!")
+  end
+
+  it "can't delete someone's else comment" do
+    comment = create(:comment, user: @user, movie: @movie)
+
+    login_as(create(:user))
+    delete "/comments/#{comment.id}"
+
+    follow_redirect!
+
+    assert !@movie.comments.empty?
+    assert(response.body.include?("Hey, this is not your comment!"))
   end
 
   it "shows delete link only to the owner of a comment" do
