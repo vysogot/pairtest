@@ -26,4 +26,15 @@ class Movie < ApplicationRecord
   def remote_movie
       @delegator ||= RemoteMovie.new(title)
   end
+
+  def self.with_genre_details
+    find_by_sql('SELECT movies.id, movies.title, movies.genre_id,
+    genres.name AS genre_name, m2.genre_movies_count
+    FROM movies
+    INNER JOIN genres ON genres.id = movies.genre_id
+    INNER JOIN (
+      SELECT genre_id, COUNT(genre_id) AS genre_movies_count FROM movies
+      GROUP BY genre_id
+    ) AS m2 ON m2.genre_id = movies.genre_id')
+  end
 end
